@@ -14,10 +14,19 @@ def ensure_deterministic():
     os.environ['PYTHONHASHSEED'] = '0'
     np.random.seed(seed)
     random.seed(seed)
-    session_conf = tf.ConfigProto(intra_op_parallelism_threads=16, inter_op_parallelism_threads=16)
-
-    tf.set_random_seed(seed)
-    sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+    try:
+        tf.set_random_seed(seed)
+        tfv1 = True
+    except:
+        tf.random.set_seed(seed)
+        tfv1 = False
+    if tfv1:
+        session_conf = tf.ConfigProto(intra_op_parallelism_threads=16, inter_op_parallelism_threads=16)
+        sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+    else:
+        session_conf = tf.compat.v1.ConfigProto(intra_op_parallelism_threads=16, inter_op_parallelism_threads=16)
+        sess = tf.compat.v1.Session(graph=tf.compat.v1.get_default_graph(), config=session_conf)
+        from tensorflow.compat.v1.keras import backend as K
     K.set_session(sess)
 
 
