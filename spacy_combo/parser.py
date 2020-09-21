@@ -7,12 +7,12 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from keras.utils.np_utils import to_categorical
 from keras.preprocessing.sequence import pad_sequences
 
-from utils import Tree
-from models import (
+from spacy_combo.utils import Tree
+from spacy_combo.models import (
     KerasModel,
     ParserModel,
 )
-from encoders import (
+from spacy_combo.encoders import (
     FeaturesFactory,
     TargetsFactory,
 )

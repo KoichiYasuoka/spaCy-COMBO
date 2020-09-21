@@ -4,7 +4,7 @@ from collections import OrderedDict
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
-from mst import mst
+from spacy_combo.mst import mst
 
 
 class EmbeddingLoader():
