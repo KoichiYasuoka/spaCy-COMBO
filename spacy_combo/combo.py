@@ -54,12 +54,9 @@ class ComboParser(object):
         tags.append(vs.add(xpos))
         deprel=f["deprel"]
         head=int(f["head"])
-        if deprel=="root" or deprel=="ROOT":
+        if deprel=="root" or deprel=="ROOT" or head==0:
           heads.append(0)
           deps.append(r)
-        elif head==0:
-          heads.append(0)
-          deps.append(vs.add(deprel))
         else:
           heads.append(head-int(f["id"]))
           deps.append(vs.add(deprel))
