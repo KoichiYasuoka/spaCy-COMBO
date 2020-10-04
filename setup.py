@@ -6,7 +6,7 @@ URL="https://github.com/KoichiYasuoka/spaCy-COMBO"
 
 setuptools.setup(
   name="spacy_combo",
-  version="0.2.0",
+  version="0.3.0",
   description="COMBO wrapper for spaCy",
   long_description=long_description,
   long_description_content_type="text/markdown",
