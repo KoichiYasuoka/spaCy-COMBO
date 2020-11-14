@@ -126,8 +126,8 @@ def load_spacy(treebank):
     exec("q=p."+locals()["p"].__all__[0])
     return locals()["q"]()
   except:
-    from spacy.lang.en import English
-    return English()
+    from spacy.lang.xx import MultiLanguage
+    return MultiLanguage()
 
 def load(treebank):
   nlp=load_spacy(treebank)
