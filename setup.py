@@ -6,7 +6,7 @@ URL="https://github.com/KoichiYasuoka/spaCy-COMBO"
 
 setuptools.setup(
   name="spacy_combo",
-  version="0.6.0",
+  version="0.6.1",
   description="COMBO wrapper for spaCy",
   long_description=long_description,
   long_description_content_type="text/markdown",
@@ -17,8 +17,8 @@ setuptools.setup(
   keywords="NLP COMBO spaCy",
   packages=setuptools.find_packages(),
   install_requires=[
-    "spacy>=2.2.2",
-    "deplacy>=1.8.1",
+    "spacy>=2.2.2<3",
+    "deplacy>=1.8.3",
     "sparse>=0.10.0",
     "numpy>=1.16.2",
     "Keras>=2.2.4",
