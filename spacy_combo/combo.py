@@ -4,12 +4,14 @@
 import os,time,numpy,joblib.numpy_pickle
 from spacy.symbols import LEMMA,POS,TAG,DEP,HEAD
 from spacy.tokens import Doc
+from spacy.language import Language
 from spacy_combo.utils import Token,Tree
 
 PACKAGE_DIR=os.path.abspath(os.path.dirname(__file__))
 DOWNLOAD_DIR=os.path.join(PACKAGE_DIR,"models")
 MODEL_URL="http://mozart.ipipan.waw.pl/~prybak/model_conll2018/"
 UD_COLS=["id","form","lemma","upostag","xpostag","feats","head","deprel","deps","misc"]
+SPACY_V3=hasattr(Language,"component")
 tm=time.time()
 
 class ComboParser(object):
@@ -37,6 +39,7 @@ class ComboParser(object):
     lemmas=[]
     pos=[]
     tags=[]
+    morphs=[]
     heads=[]
     deps=[]
     spaces=[]
@@ -52,6 +55,7 @@ class ComboParser(object):
         if xpos=="_" or xpos=="":
           xpos=upos if feats=="_" else upos+"_"+feats
         tags.append(vs.add(xpos))
+        morphs.append(feats)
         deprel=f["deprel"]
         head=int(f["head"])
         if deprel=="root" or deprel=="ROOT" or head==0:
@@ -64,8 +68,13 @@ class ComboParser(object):
     doc=Doc(self.vocab,words=words,spaces=spaces)
     a=numpy.array(list(zip(lemmas,pos,tags,deps,heads)),dtype="uint64")
     doc.from_array([LEMMA,POS,TAG,DEP,HEAD],a)
-    doc.is_tagged=True
-    doc.is_parsed=True
+    if SPACY_V3:
+      for i,j in enumerate(morphs):
+        if j!="_" and j!="":
+          doc[i].set_morph(j)
+    else:
+      doc.is_tagged=True
+      doc.is_parsed=True
     return doc
 
 class ComboUnpickler(joblib.numpy_pickle.NumpyUnpickler):
@@ -131,8 +140,13 @@ def load_spacy(treebank):
 
 def load(treebank):
   nlp=load_spacy(treebank)
-  nlp.add_pipe(nlp.create_pipe("sentencizer"))
-  nlp.add_pipe(ComboParser(treebank,nlp.vocab))
+  if SPACY_V3:
+    nlp.add_pipe("sentencizer")
+    Language.component("COMBO",func=ComboParser(treebank,nlp.vocab))
+    nlp.add_pipe("COMBO")
+  else:
+    nlp.add_pipe(nlp.create_pipe("sentencizer"))
+    nlp.add_pipe(ComboParser(treebank,nlp.vocab))
   nlp.meta["lang"]=treebank+"_COMBO"
   return nlp
 
