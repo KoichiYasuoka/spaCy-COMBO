@@ -6,7 +6,7 @@ URL="https://github.com/KoichiYasuoka/spaCy-COMBO"
 
 setuptools.setup(
   name="spacy_combo",
-  version="0.7.0",
+  version="0.7.1",
   description="COMBO wrapper for spaCy",
   long_description=long_description,
   long_description_content_type="text/markdown",
@@ -18,12 +18,12 @@ setuptools.setup(
   packages=setuptools.find_packages(),
   install_requires=[
     "spacy>=2.2.2",
-    "deplacy>=1.8.4",
+    "deplacy>=1.8.7",
     "sparse>=0.10.0",
     "numpy>=1.16.2",
     "Keras>=2.2.4",
     "scikit-learn>=0.20.3",
-    "tensorflow>=1.15.2",
+    "tensorflow>=1.14.0",
     "joblib>=0.13.2"
   ],
   python_requires=">=3.6",
