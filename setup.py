@@ -6,7 +6,7 @@ URL="https://github.com/KoichiYasuoka/spaCy-COMBO"
 
 setuptools.setup(
   name="spacy_combo",
-  version="0.7.4",
+  version="0.7.5",
   description="COMBO wrapper for spaCy",
   long_description=long_description,
   long_description_content_type="text/markdown",
@@ -18,7 +18,7 @@ setuptools.setup(
   packages=setuptools.find_packages(),
   install_requires=[
     "spacy>=2.2.2",
-    "deplacy>=1.9.7",
+    "deplacy>=1.9.9",
     "sparse>=0.10.0",
     "numpy>=1.16.2",
     "Keras>=2.2.4",
