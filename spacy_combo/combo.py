@@ -62,7 +62,8 @@ class ComboParser(object):
           heads.append(0)
           deps.append(r)
         else:
-          heads.append(head-int(f["id"]))
+          h=head-int(f["id"]))
+          heads.append(2**64+h if h<0 else h)
           deps.append(vs.add(deprel))
         spaces.append(not "SpaceAfter=No" in f["misc"])
     doc=Doc(self.vocab,words=words,spaces=spaces)
